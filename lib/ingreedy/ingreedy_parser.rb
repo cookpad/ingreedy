@@ -74,11 +74,15 @@ module Ingreedy
       word = amount[:word_integer_amount]
       word &&= word.to_s
 
+      word_fraction = amount[:word_fraction_amount]
+      word_fraction &&= word_fraction.to_s
+
       Rationalizer.rationalize(
         integer: integer,
         float: float,
         fraction: fraction,
         word: word,
+        word_fraction: word_fraction,
       )
     end
   end

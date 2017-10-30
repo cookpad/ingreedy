@@ -13,6 +13,17 @@ describe Ingreedy::AmountParser do
         expect(subject).to parse(word.upcase)
       end
     end
+
+    %w(half third quarter fifth sixth seventh eighth ninth tenth eleventh twelfth).each do |word|
+      word += " "
+      it %(parses a lowercase "#{word}" followed by space) do
+        expect(subject).to parse(word)
+      end
+
+      it %(parses a uppercase "#{word}") do
+        expect(subject).to parse(word.upcase)
+      end
+    end
   end
 
   context "simple fractions" do

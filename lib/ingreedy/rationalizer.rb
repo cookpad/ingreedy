@@ -9,13 +9,14 @@ module Ingreedy
       @float    = options.fetch(:float, nil)
       @fraction = options.fetch(:fraction, nil)
       @word     = options.fetch(:word, nil)
+      @word_fraction = options.fetch(:word_fraction, nil)
     end
 
     def rationalize
       if Ingreedy.preserve_amounts
-        (normalized_word || compound_fraction || @float || @integer)
+        (normalized_word || normalized_word_fraction || compound_fraction || @float || @integer)
       else
-        (normalized_word || rationalized_fraction || rationalized_float || @integer).to_r
+        (normalized_word || normalized_word_fraction || rationalized_fraction || rationalized_float || @integer).to_r
       end
     end
 
@@ -24,6 +25,11 @@ module Ingreedy
     def normalized_word
       return unless @word
       Ingreedy.dictionaries.current.numbers[@word.downcase]
+    end
+
+    def normalized_word_fraction
+      return unless @word_fraction
+      Ingreedy.dictionaries.current.fractions[@word_fraction.downcase]
     end
 
     def normalized_fraction
