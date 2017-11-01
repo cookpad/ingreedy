@@ -10,8 +10,20 @@ module Ingreedy
         AmountParser.new.as(:amount_end)
     end
 
+    rule(:conjunction) do
+      AmountParser.new.as(:amount) >>
+        whitespace.maybe >>
+        conjunction_separator >>
+        whitespace.maybe >>
+        AmountParser.new.as(:amount_end)
+    end
+
     rule(:range_separator) do
       range_separators.map { |separator| str(separator) }.inject(:|)
+    end
+
+    rule(:conjunction_separator) do
+      dictionary_conjunctions.map { |separator| str(separator) }.inject(:|)
     end
 
     rule(:amount) do
@@ -70,7 +82,7 @@ module Ingreedy
     end
 
     rule(:amount_and_unit) do
-      (range | amount) >>
+       amount_and_units >>
         whitespace.maybe >>
         unit_and_preposition.maybe >>
         container_size.maybe
@@ -120,6 +132,13 @@ module Ingreedy
 
     attr_reader :original_query
 
+    def amount_and_units
+      rules = [range]
+      rules.push(conjunction) if dictionary_conjunctions.any?
+      rules.push(amount)
+      rules.inject(:|)
+    end
+
     def imprecise_amounts
       Ingreedy.dictionaries.current.imprecise_amounts
     end
@@ -130,6 +149,10 @@ module Ingreedy
 
     def range_separators
       Ingreedy.dictionaries.current.range_separators
+    end
+
+    def dictionary_conjunctions
+      Ingreedy.dictionaries.current.conjunctions
     end
 
     def unit_matches

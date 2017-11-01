@@ -166,5 +166,7 @@
   - "-"
   - "~"
   - "or"
+:conjunctions:
+  - "and a"
 :imprecise_amounts:
   - "a few"

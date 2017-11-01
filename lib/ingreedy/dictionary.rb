@@ -1,15 +1,16 @@
 module Ingreedy
   class Dictionary
-    attr_reader :units, :numbers, :prepositions, :range_separators
+    attr_reader :units, :numbers, :prepositions, :range_separators, :conjunctions
     attr_reader :imprecise_amounts, :fractions
 
-    def initialize(units:, numbers: {}, prepositions: [], range_separators: %w{- ~}, imprecise_amounts: [], fractions: [])
+    def initialize(units:, numbers: {}, prepositions: [], range_separators: %w{- ~}, imprecise_amounts: [], fractions: [], conjunctions: [])
       @units = units
       @numbers = sort_by_length(numbers)
       @prepositions = prepositions
       @range_separators = range_separators
       @imprecise_amounts = imprecise_amounts
       @fractions = sort_by_length(fractions)
+      @conjunctions = conjunctions
     end
 
     # https://en.wikipedia.org/wiki/Number_Forms
