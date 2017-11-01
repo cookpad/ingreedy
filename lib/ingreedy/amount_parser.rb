@@ -47,11 +47,16 @@ module Ingreedy
       word_digits.map { |d| stri(d) }.inject(:|) || any
     end
 
+    rule(:word_fraction) do
+      word_fractions.map { |d| stri(d) }.inject(:|) || any
+    end
+
     rule(:amount) do
       fraction |
         float.as(:float_amount) |
         integer.as(:integer_amount) |
-        word_digit.as(:word_integer_amount) >> whitespace
+        word_digit.as(:word_integer_amount) >> whitespace |
+        word_fraction.as(:word_fraction_amount) >> whitespace
     end
 
     root(:amount)
@@ -64,6 +69,10 @@ module Ingreedy
 
     def vulgar_fractions
       Ingreedy.dictionaries.current.vulgar_fractions.keys
+    end
+
+    def word_fractions
+      Ingreedy.dictionaries.current.fractions.keys
     end
   end
 end

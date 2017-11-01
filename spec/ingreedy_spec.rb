@@ -338,6 +338,16 @@ describe Ingreedy, "Given a range" do
   end
 end
 
+describe Ingreedy, "Given a conjection" do
+  it "works with 'and a'" do
+    result = Ingreedy.parse "1 and a half tsp sugar"
+
+    expect(result.amount).to eql([Rational(1, 1), Rational(1, 2)])
+    expect(result.unit).to eq(:teaspoon)
+    expect(result.ingredient).to eq("sugar")
+  end
+end
+
 describe Ingreedy, "parsing in language with no prepositions" do
   before(:all) do
     Ingreedy.dictionaries[:id] = {
