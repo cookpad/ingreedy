@@ -1,7 +1,12 @@
 module Ingreedy
   class UnitVariationMapper
+    ABBREVIATION_DOT = "\\."
+    WORD_BOUNDRY = "\\b"
+    SPACE = "\\s"
+
     def self.regexp
       regexp_string = all_variations.map { |v| Regexp.escape(v) }.join("|")
+      regexp_string = "((#{regexp_string})(#{[ABBREVIATION_DOT, WORD_BOUNDRY, SPACE].join('|')}))"
       Regexp.new(regexp_string, Regexp::IGNORECASE)
     end
 

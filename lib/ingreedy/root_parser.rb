@@ -135,6 +135,7 @@ module Ingreedy
     def unit_matches
       @unit_matches ||= original_query.
                         scan(UnitVariationMapper.regexp).
+                        flatten.uniq.map(&:strip).
                         sort_by(&:length).
                         reverse
     end
