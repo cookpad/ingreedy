@@ -197,6 +197,30 @@ describe Ingreedy, "metric units" do
       end
     end
   end
+
+  context "long form with abbreviation" do
+      Ingreedy.dictionaries[:en] = {
+        units: {
+          cup: ["cup"],
+          small_cup: ["small cup", "cup s"],
+          large_cup: ["large cup", "cup l"]
+        },
+      }
+      Ingreedy.locale = :en
+
+    {
+      "1 small cup sour cream" => :small_cup,
+      "1 cup s sour cream" => :small_cup,
+      "1 large cup liquide milk" => :large_cup,
+      "1 cup l liquide milk" => :large_cup,
+      "1 cup sour cream" => :cup,
+      "1 cup liquide milk" => :cup
+    }.each do |query, expected|
+      it "parses the units correctly" do
+        expect(Ingreedy.parse(query)).to parse_the_unit(expected)
+      end
+    end
+  end
 end
 
 describe Ingreedy, "nonstandard units" do
