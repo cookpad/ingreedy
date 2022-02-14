@@ -8,7 +8,7 @@ module Ingreedy
     end
 
     def []=(locale, attributes)
-      @collection[locale] = Dictionary.new(attributes)
+      @collection[locale] = Dictionary.new(**attributes)
     end
 
     def current
