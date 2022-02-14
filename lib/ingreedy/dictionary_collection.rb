@@ -38,7 +38,7 @@ module Ingreedy
     end
 
     def fetch_dictionary(locale)
-      @collection[locale] ||= Dictionary.new load_yaml(locale)
+      @collection[locale] ||= Dictionary.new **load_yaml(locale)
     rescue Errno::ENOENT
     end
 
