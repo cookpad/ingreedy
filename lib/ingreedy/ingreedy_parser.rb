@@ -12,6 +12,7 @@ module Ingreedy
     Result = Struct.new(
       :amount,
       :unit,
+      :suffix_unit,
       :container_amount,
       :container_unit,
       :ingredient,
@@ -43,6 +44,10 @@ module Ingreedy
       result.unit = convert_unit_variation_to_canonical(
         parslet[:unit].to_s,
       ) if parslet[:unit]
+
+      result.suffix_unit = convert_unit_variation_to_canonical(
+        parslet[:suffix_unit].to_s,
+      ) if parslet[:suffix_unit]
 
       result.container_unit = convert_unit_variation_to_canonical(
         parslet[:container_unit].to_s,

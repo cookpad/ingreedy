@@ -74,6 +74,17 @@ module Ingreedy
         str(")").maybe >> preposition_or_whitespace
     end
 
+    rule(:unit_and_amount) do
+      # e.g. 小さじ1 or 小さじ1杯 <= (1 teaspoon)
+      unit.as(:unit) >>
+        whitespace >>
+        (range | amount) >>
+        whitespace >>
+        unit.maybe.as(:suffix_unit) >>
+        whitespace >>
+        container_size.maybe
+    end
+
     rule(:amount_and_unit) do
       (range | amount) >>
         whitespace.maybe >>
@@ -82,7 +93,7 @@ module Ingreedy
     end
 
     rule(:quantity) do
-      amount_and_unit | unit_and_preposition
+      amount_and_unit | unit_and_amount | unit_and_preposition
     end
 
     rule(:standard_format) do
